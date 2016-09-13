@@ -1,0 +1,19 @@
+{
+  "name": "pocket-extension",
+  "version": "1.0.0",
+  "description": "Chrome extension for Pocket",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alex-fomin/pocket-extension.git"
+  },
+  "author": "Alex Fomin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alex-fomin/pocket-extension/issues"
+  },
+  "homepage": "https://github.com/alex-fomin/pocket-extension#readme"
+}
