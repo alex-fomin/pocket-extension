@@ -4,7 +4,9 @@
   "description": "Chrome extension for Pocket",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch": "webpack --progress --colors --watch",
+    "build": "webpack && cp src/manifest.json dist/manifest.json"
   },
   "repository": {
     "type": "git",
@@ -15,5 +17,10 @@
   "bugs": {
     "url": "https://github.com/alex-fomin/pocket-extension/issues"
   },
-  "homepage": "https://github.com/alex-fomin/pocket-extension#readme"
+  "homepage": "https://github.com/alex-fomin/pocket-extension#readme",
+  "devDependencies": {
+    "awesome-typescript-loader": "^1.0.0",
+    "typescript": "^1.8.10",
+    "webpack": "^1.13.2"
+  }
 }
