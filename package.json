@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build-safari": "webpack --config webpack.config.safari.js"
+    "build-safari": "webpack --config webpack.config.safari.js --display-error-details --optimize-minimize",
+    "watch-safari": "webpack --config webpack.config.safari.js --progress --colors --watch"
   },
   "repository": {
     "type": "git",
@@ -26,6 +27,7 @@
     "webpack": "^1.13.2"
   },
   "dependencies": {
-    "lodash": "^4.15.0"
+    "lodash": "^4.15.0",
+    "simple-ajax": "^2.6.0"
   }
 }
