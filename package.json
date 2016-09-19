@@ -5,8 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "watch": "webpack --progress --colors --watch",
-    "build": "webpack && cp src/manifest.json dist/manifest.json"
+    "build-safari": "webpack --config webpack.config.safari.js"
   },
   "repository": {
     "type": "git",
@@ -20,6 +19,9 @@
   "homepage": "https://github.com/alex-fomin/pocket-extension#readme",
   "devDependencies": {
     "awesome-typescript-loader": "^1.0.0",
+    "copy-webpack-plugin": "^3.0.1",
+    "file-loader": "^0.9.0",
+    "html-webpack-plugin": "^2.22.0",
     "typescript": "^1.8.10",
     "webpack": "^1.13.2"
   }

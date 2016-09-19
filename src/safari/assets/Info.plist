@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+    <dict>
+        <key>Author</key>
+        <string>Alex Fomin</string>
+        <key>Builder Version</key>
+        <string>11601.7.8</string>
+        <key>CFBundleDisplayName</key>
+        <string>Add To Pocket</string>
+        <key>CFBundleIdentifier</key>
+        <string>com.yourcompany.addtopocket</string>
+        <key>CFBundleInfoDictionaryVersion</key>
+        <string>6.0</string>
+        <key>CFBundleShortVersionString</key>
+        <string>1.0</string>
+        <key>CFBundleVersion</key>
+        <string>1</string>
+        <key>Chrome</key>
+        <dict>
+            <key>Context Menu Items</key>
+            <array>
+                <dict>
+                    <key>Command</key>
+                    <string>add_to_pocket</string>
+                    <key>Identifier</key>
+                    <string>add_to_pocket</string>
+                    <key>Title</key>
+                    <string>Add to Pocket</string>
+                </dict>
+            </array>
+            <key>Database Quota</key>
+            <integer>10485760</integer>
+            <key>Global Page</key>
+            <string>index.html</string>
+            <key>Toolbar Items</key>
+            <array>
+                <dict>
+                    <key>Command</key>
+                    <string>add_to_pocket</string>
+                    <key>Identifier</key>
+                    <string>add_to_pocket</string>
+                    <key>Image</key>
+                    <string>notAdded-38.png</string>
+                    <key>Include By Default</key>
+                    <true/>
+                    <key>Label</key>
+                    <string>Add to Pocket</string>
+                    <key>Tool Tip</key>
+                    <string>Add to Pocket</string>
+                </dict>
+                <dict>
+                    <key>Identifier</key>
+                    <string>random</string>
+                    <key>Image</key>
+                    <string>random-38.png</string>
+                    <key>Include By Default</key>
+                    <true/>
+                    <key>Label</key>
+                    <string>Random article</string>
+                    <key>Tool Tip</key>
+                    <string>Get random article from Pocket</string>
+                </dict>
+            </array>
+        </dict>
+        <key>Description</key>
+        <string>Adds current page to Pocket/Show random page from Pocket</string>
+        <key>DeveloperIdentifier</key>
+        <string>0000000000</string>
+        <key>ExtensionInfoDictionaryVersion</key>
+        <string>1.0</string>
+        <key>Permissions</key>
+        <dict>
+            <key>Website Access</key>
+            <dict>
+                <key>Include Secure Pages</key>
+                <true/>
+                <key>Level</key>
+                <string>All</string>
+            </dict>
+        </dict>
+    </dict>
+</plist>

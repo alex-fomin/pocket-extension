@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+    <array>
+        <dict>
+            <key>Key</key>
+            <string>login</string>
+            <key>Secure</key>
+            <true/>
+        </dict>
+        <dict>
+            <key>Key</key>
+            <string>api_key</string>
+            <key>Secure</key>
+            <true/>
+        </dict>
+        <dict>
+            <key>Key</key>
+            <string>update_timestamp</string>
+            <key>Secure</key>
+            <true/>
+        </dict>
+    </array>
+</plist>
