@@ -1,12 +1,28 @@
-/// <reference path="./safari.d.ts"/>
-/// <reference path="../../typings/index.d.ts"/>
-import _ = require("lodash");
-import {ExtensionButtons} from "./consts";
+import {Commands, Messages} from "./consts";
+import {PocketService} from "../common/PocketService"
+import {SafariSettings} from "./SafariSettings";
+
+const settings = new SafariSettings();
+
+safari.application.addEventListener("command", (event: SafariCommandEvent)=> {
+    if (settings.isAuthorized()) {
+        var pocketService = new PocketService(settings.access_token);
 
 
-console.log(_);
+        if (event.command === Commands.ADD_TO_POCKET) {
+            pocketService.toggle(safari.application.activeBrowserWindow.activeTab.url);
+        }
+        else {
 
-let itemArray = safari.extension.toolbarItems;
-let button = _.find(itemArray, x=>x.identifier == ExtensionButtons.ADD_TO_POCKET);
+        }
+    }
+    else {
+        safari.application.activeBrowserWindow.openTab().url = safari.extension.baseURI + "oauth.html";
+    }
+}, false);
 
-console.log(button);
+safari.application.addEventListener("message", (messageEvent: SafariExtensionMessageEvent)=> {
+    if (messageEvent.name === Messages.SET_ACCESS_TOKEN) {
+        settings.access_token = messageEvent.message;
+    }
+}, false);

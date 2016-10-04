@@ -5,11 +5,11 @@
         <key>Author</key>
         <string>Alex Fomin</string>
         <key>Builder Version</key>
-        <string>11601.7.8</string>
+        <string>11602.1.50.0.10</string>
         <key>CFBundleDisplayName</key>
         <string>Add To Pocket</string>
         <key>CFBundleIdentifier</key>
-        <string>com.yourcompany.addtopocket</string>
+        <string>com.sane.addtopocket</string>
         <key>CFBundleInfoDictionaryVersion</key>
         <string>6.0</string>
         <key>CFBundleShortVersionString</key>
@@ -62,6 +62,16 @@
                     <string>Get random article from Pocket</string>
                 </dict>
             </array>
+        </dict>
+        <key>Content</key>
+        <dict>
+            <key>Scripts</key>
+            <dict>
+                <key>Start</key>
+                <array>
+                    <string>injected.js</string>
+                </array>
+            </dict>
         </dict>
         <key>Description</key>
         <string>Adds current page to Pocket/Show random page from Pocket</string>

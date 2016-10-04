@@ -10,15 +10,19 @@ interface Window {
 declare namespace safari {
     export var application: SafariApplication;
     export var extension: SafariExtension;
-    export var self: SafariExtensionGlobalPage | SafariExtensionBar;
+    export var self: SafariContentWebPage | SafariExtensionGlobalPage | SafariExtensionBar;
+}
+
+interface SafariContentWebPage {
+    tab: SafariContentBrowserTabProxy;
+}
+
+interface SafariContentBrowserTabProxy extends SafariWebPageProxy {
+
 }
 
 interface SafariEvent {
-    /**
-     * The type of the event.
-     * The string used to identify a particular type of event is documented in the reference for that class.
-     */
-        type: string;
+    type: string;
 
     /**
      * The target of the event.
@@ -72,7 +76,7 @@ interface SafariEvent {
 }
 
 interface SafariEventListener extends Function {
-    (event: SafariEvent): any;
+    (event: SafariEvent|SafariExtensionMessageEvent): any;
 }
 
 interface SafariEventTarget {

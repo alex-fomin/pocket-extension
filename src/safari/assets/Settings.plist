@@ -4,12 +4,6 @@
     <array>
         <dict>
             <key>Key</key>
-            <string>login</string>
-            <key>Secure</key>
-            <true/>
-        </dict>
-        <dict>
-            <key>Key</key>
             <string>api_key</string>
             <key>Secure</key>
             <true/>
@@ -18,7 +12,7 @@
             <key>Key</key>
             <string>update_timestamp</string>
             <key>Secure</key>
-            <true/>
+            <false/>
         </dict>
     </array>
 </plist>

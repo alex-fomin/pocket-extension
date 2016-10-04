@@ -1,6 +1,14 @@
 {
   "compilerOptions": {
-    "target": "es5"
+    "module": "commonjs",
+    "target": "es6"
   },
-  "files": []
+  "files": [
+    "./typings/index.d.ts",
+    "./src/safari/lib/safari.d.ts",
+    "./src/common/lib/simple-ajax.d.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }

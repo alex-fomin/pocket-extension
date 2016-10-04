@@ -2,10 +2,14 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
-    entry: "./src/safari/index.ts",
+    entry: {
+        bundle: "./src/safari/index.ts",
+        injected: "./src/safari/injected.ts",
+        oauth: "./src/safari/oauth.ts"
+    },
     output: {
         path: './dist/AddToPocket.safariextension',
-        filename: "bundle.js"
+        filename: "[name].js"
     },
 
     resolve: {
@@ -23,11 +27,14 @@ module.exports = {
 
     plugins: [
         new HtmlWebpackPlugin({
-            filename: 'index.html'
+            filename: 'index.html',
+            chunks: ['bundle']
         }),
         new CopyWebpackPlugin([
             {from: 'src/safari/assets/'},
             {from: 'images/random-38.png'},
-            {from: 'images/notAdded-38.png'}])
+            {from: 'images/notAdded-38.png'},
+            {from: 'src/common/assets/'}
+        ])
     ]
 };
