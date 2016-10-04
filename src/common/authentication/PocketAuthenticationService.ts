@@ -1,10 +1,10 @@
-import {PocketApi} from "../PocketService";
+import {PocketApiBase} from "../PocketService";
 import {IAuthenticationSettings} from "./IAuthenticationSettings";
 export class PocketAuthenticationService {
     private _api;
 
     constructor(private storage: IAuthenticationSettings) {
-        this._api = new PocketApi();
+        this._api = new PocketApiBase();
     }
 
     private getRequestToken() {
