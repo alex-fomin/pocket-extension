@@ -75,13 +75,17 @@ interface SafariEvent {
     preventDefault(): void;
 }
 
-interface SafariEventListener extends Function {
-    (event: SafariEvent|SafariExtensionMessageEvent): any;
+interface SafariBeforeNavigateEvent extends SafariEvent {
+    url: string;
+}
+
+interface SafariEventListener<T extends SafariEvent> extends Function {
+    (event: T): any;
 }
 
 interface SafariEventTarget {
-    addEventListener(type: string, listener: SafariEventListener, useCapture?: boolean): void;
-    removeEventListener(type: string, listener: SafariEventListener, useCapture?: boolean): void;
+    // addEventListener(type: string, listener: SafariEventListener, useCapture?: boolean): void;
+    removeEventListener(type: string, listener: SafariEventListener<SafariEvent>, useCapture?: boolean): void;
 }
 
 interface SafariBrowserWindow extends SafariEventTarget {
@@ -288,6 +292,11 @@ interface SafariApplication extends SafariEventTarget {
     browserWindows: Array<SafariBrowserWindow>;
     privateBrowsing: SafariPrivateBrowsing;
     openBrowserWindow(): SafariBrowserWindow;
+
+    addEventListener(type: "beforeNavigate", listener: SafariEventListener<SafariBeforeNavigateEvent>, useCapture?: boolean): void;
+    addEventListener(type: "command", listener: SafariEventListener<SafariCommandEvent>, useCapture?: boolean): void;
+    addEventListener(type: "message", listener: SafariEventListener<SafariExtensionMessageEvent>, useCapture?: boolean): void;
+    addEventListener(type: "activate", listener: SafariEventListener<SafariEvent>, useCapture?: boolean): void;
 }
 
 interface SafariExtensionContextMenuEvent extends SafariEvent {

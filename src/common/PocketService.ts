@@ -1,7 +1,7 @@
 import * as Ajax from "simple-ajax"
 
 import * as _ from "lodash";
-import {ArticleStorage} from "./ArticleStorage";
+import {DbStorage} from "./DbStorage";
 import {ISettings} from "./ISettings";
 import {IArticle} from "./model/Article";
 
@@ -46,33 +46,74 @@ class PocketApi extends PocketApiBase {
         super();
     }
 
-    get(since: number): Promise<{since: number, items: IArticle[]}> {
-        return super.post('get', {
+    async get(since: number): Promise<{since: number, items: IArticle[]}> {
+        let result = await super.post('get', {
             since,
             "detailType": "complete"
-        }, this.access_token)
-            .then(result=>({since: result.since, items: _.values(result.list)}));
+        }, this.access_token);
+        return {since: <number>result.since, items: <IArticle[]>_.values(result.list)};
+    }
+
+    async archive(item_id: string) {
+        var result = await super.post('send', {
+            actions: [
+                {
+                    "action": "archive",
+                    item_id,
+                }
+            ]
+        }, this.access_token);
+        return result.status === 1;
+    }
+
+    async add(url: string): Promise<IArticle> {
+        var result = await super.post('add', {url}, this.access_token);
+        return result.item;
     }
 }
 
 export class PocketService {
     private api: PocketApi;
-    private articleStorage: ArticleStorage;
+    private dbStorage: DbStorage;
 
     constructor(private settings: ISettings) {
         this.api = new PocketApi(settings.access_token);
-        this.articleStorage = new ArticleStorage();
+        this.dbStorage = new DbStorage();
     }
 
-    public update() {
-        return this.api.get(this.settings.last_timestamp || 0)
-            .then(result=>this.articleStorage.update(result.items, result.since));
+    public async update() {
+        let result = await this.api.get(this.settings.last_timestamp || 0);
+        await this.dbStorage.update(result.items, result.since);
     }
 
     public articlesCount() {
-        return this.articleStorage.count();
+        return this.dbStorage.count();
     }
 
-    public toggle(uri: string) {
+    public async toggle(url: string) {
+        if (url !== undefined) {
+            var article = await this.dbStorage.article(url);
+            if (article) {
+                this.api.archive(article.item_id);
+                await this.dbStorage.remove(article.item_id);
+                return false;
+            }
+            else {
+                var article = await this.api.add(url);
+                await this.dbStorage.addArticle(article);
+                return true;
+            }
+        }
+        else {
+            return false;
+        }
+    }
+
+    public getRandomArticle() {
+        return this.dbStorage.getRandomArticle();
+    }
+
+    public async hasArticle(url: string) {
+        return url !== undefined && await this.dbStorage.article(url) != null;
     }
 }

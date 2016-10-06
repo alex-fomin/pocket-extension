@@ -34,6 +34,7 @@ module.exports = {
             {from: 'src/safari/assets/'},
             {from: 'images/random-38.png'},
             {from: 'images/notAdded-38.png'},
+            {from: 'images/added-38.png'},
             {from: 'src/common/assets/'}
         ])
     ]

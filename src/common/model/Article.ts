@@ -1,7 +1,7 @@
 export class Status {
-    public static OK = "0";
-    static ARCHIVED = "1";
-    static DELETED = "2";
+    public static readonly OK = "0";
+    public static readonly ARCHIVED = "1";
+    public static readonly DELETED = "2";
 }
 
 export interface IArticle {
