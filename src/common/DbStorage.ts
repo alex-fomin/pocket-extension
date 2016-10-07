@@ -1,6 +1,7 @@
 import Dexie from 'dexie';
 import {IArticle, Status} from "./model/Article";
-import _ = require("lodash");
+//noinspection TypeScriptCheckImport
+import * as groupBy from  'lodash/groupBy'
 
 export class DbStorage extends Dexie {
     private articles: Dexie.Table<IArticle, string>;
@@ -25,8 +26,8 @@ export class DbStorage extends Dexie {
     }
 
     public async update(articles: IArticle[], since?: number) {
-        var articleMap = _.groupBy(articles, a=>(a.status === Status.OK).toString());
-        if (_.isUndefined(since)) {
+        var articleMap = groupBy(articles, a=>(a.status === Status.OK).toString());
+        if (since === undefined) {
             await this.articles.clear();
         }
         var deleted = (articleMap['false'] || []).map(x=>x.item_id);

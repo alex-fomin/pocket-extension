@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build-safari": "webpack --config webpack.config.safari.js --display-error-details --optimize-minimize",
     "watch-safari": "webpack --config webpack.config.safari.js --progress --colors --watch",
-    "preinstall": "typings install"
+    "build": "webpack --config webpack.config.js --display-error-details --optimize-minimize",
+    "watch": "webpack -config webpack.config.js --progress --colors --watch"
   },
   "repository": {
     "type": "git",
@@ -28,8 +29,10 @@
     "webpack": "^1.13.2"
   },
   "dependencies": {
+    "@types/lodash": "^4.14.37",
+    "@types/whatwg-fetch": "0.0.32",
     "dexie": "^1.4.2",
     "lodash": "^4.15.0",
-    "simple-ajax": "^2.6.0"
+    "whatwg-fetch": "^1.0.0"
   }
 }

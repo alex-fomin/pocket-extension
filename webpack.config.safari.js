@@ -4,7 +4,6 @@ var CopyWebpackPlugin = require('copy-webpack-plugin');
 module.exports = {
     entry: {
         bundle: "./src/safari/index.ts",
-        injected: "./src/safari/injected.ts",
         oauth: "./src/safari/oauth.ts"
     },
     output: {

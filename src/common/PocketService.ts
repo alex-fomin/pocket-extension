@@ -1,42 +1,34 @@
-import * as Ajax from "simple-ajax"
 
-import * as _ from "lodash";
 import {DbStorage} from "./DbStorage";
 import {ISettings} from "./ISettings";
 import {IArticle} from "./model/Article";
+import * as values from "lodash/values"
+import 'whatwg-fetch'
 
 export class PocketApiBase {
     private static readonly uri = "https://getpocket.com/v3/";
     private static readonly consumer_key = '15287-db68741601b94e375145742f';
 
-    public post(path: string, data: any, accessToken?: string): Promise<any> {
+    public async post(path: string, data: any, accessToken?: string): Promise<any> {
 
-        let extendedData = _.extend(
-            {consumer_key: PocketApiBase.consumer_key},
-            _.isUndefined(accessToken) ? {} : {access_token: accessToken},
-            data);
+        let extendedData = {
+            consumer_key: PocketApiBase.consumer_key,
+            //...data,
+            access_token: accessToken
+        };
 
 
-        let ajax = new Ajax({
-            url: PocketApiBase.uri + path,
+        let
+            response = await window.fetch(PocketApiBase.uri + path, {
                 method: 'POST',
-                contentType: 'application/json; charset=utf-8',
-                dataType: 'json',
-                data: extendedData,
                 headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
                     'X-Accept': 'application/json'
-                }
-            }
-        );
-
-        let deferred = new Promise((resolve, reject)=> {
-            ajax.on("success", ({target})=>resolve(JSON.parse(target.responseText)));
-            ajax.on("error", (e)=>reject(e));
-        });
-
-        ajax.send();
-
-        return deferred;
+                },
+                body: JSON.stringify(extendedData)
+            });
+        return response.json();
     }
 }
 
@@ -51,7 +43,7 @@ class PocketApi extends PocketApiBase {
             since,
             "detailType": "complete"
         }, this.access_token);
-        return {since: <number>result.since, items: <IArticle[]>_.values(result.list)};
+        return {since: <number>result.since, items: <IArticle[]>values(result.list)};
     }
 
     async archive(item_id: string) {
@@ -66,9 +58,9 @@ class PocketApi extends PocketApiBase {
         return result.status === 1;
     }
 
-    async add(url: string): Promise<IArticle> {
+    async add(url: string) {
         var result = await super.post('add', {url}, this.access_token);
-        return result.item;
+        return <IArticle>result.item;
     }
 }
 

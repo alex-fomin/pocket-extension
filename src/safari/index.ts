@@ -1,7 +1,6 @@
 import {Commands, Messages} from "./consts";
 import {PocketService} from "../common/PocketService"
 import {SafariSettings} from "./SafariSettings";
-import _ = require("lodash");
 
 const settings = new SafariSettings();
 
@@ -71,7 +70,8 @@ const messageProcessors = {
 
 safari.application.addEventListener("command", event=> {
     if (settings.isAuthorized()) {
-        let handler: Function = commandHandlers[event.command] || _.noop;
+        let handler: Function = commandHandlers[event.command] || (()=> {
+            });
         handler(pocketService);
     }
     else {
@@ -80,7 +80,8 @@ safari.application.addEventListener("command", event=> {
 }, false);
 
 safari.application.addEventListener("message", messageEvent=> {
-    let messageProcessor: Function = messageProcessors[messageEvent.name] || _.noop;
+    let messageProcessor: Function = messageProcessors[messageEvent.name] || (()=> {
+        });
     messageProcessor(messageEvent);
 }, false);
 
