@@ -1,2 +1,3 @@
 var safari = require("./webpack.config.safari");
-module.exports = [safari];
+var chrome = require("./webpack.config.chrome");
+module.exports = [safari, chrome];

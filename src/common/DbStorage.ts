@@ -36,7 +36,12 @@ export class DbStorage extends Dexie {
     }
 
     public async article(url: string) {
-        return await this.articles.where('given_url').equals(url)
+        if (url == null || url === undefined || url == "") {
+            return null;
+        }
+
+        return await this.articles
+            .where('given_url').equals(url)
             .or('resolved_url').equals(url)
             .first();
     }

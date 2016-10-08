@@ -4,6 +4,7 @@ import {IArticle} from "./model/Article";
 import * as values from "lodash/values"
 import * as extend from "lodash/extend"
 import * as Ajax from "simple-ajax"
+import {log} from "./decorators/log";
 
 export class PocketApiBase {
     private static readonly uri = "https://getpocket.com/v3/";
@@ -48,6 +49,7 @@ class PocketApi extends PocketApiBase {
         super();
     }
 
+    @log(false)
     async get(since: number): Promise<{since: number, items: IArticle[]}> {
         let result = await super.post('get', {
             since,
@@ -56,6 +58,7 @@ class PocketApi extends PocketApiBase {
         return {since: <number>result.since, items: <IArticle[]>values(result.list)};
     }
 
+    @log(true)
     async archive(item_id: string) {
         var result = await super.post('send', {
             actions: [
@@ -68,7 +71,8 @@ class PocketApi extends PocketApiBase {
         return result.status === 1;
     }
 
-    async add(url: string) {
+    @log(true)
+    async add(url: string): Promise<IArticle> {
         var result = await super.post('add', {url}, this.access_token);
         return <IArticle>result.item;
     }
@@ -83,21 +87,25 @@ export class PocketService {
         this.dbStorage = new DbStorage();
     }
 
+    @log(true)
     public async update() {
         let result = await this.api.get(this.settings.last_timestamp || 0);
         await this.dbStorage.update(result.items, result.since);
     }
 
+    @log(true)
     public async refresh() {
         this.settings.last_timestamp = 0;
         await this.dbStorage.clear();
         await this.update();
     }
 
+    @log(true)
     public articlesCount() {
         return this.dbStorage.count();
     }
 
+    @log(true)
     public async toggle(url: string) {
         if (url !== undefined) {
             var article = await this.dbStorage.article(url);
@@ -107,8 +115,8 @@ export class PocketService {
                 return false;
             }
             else {
-                var article = await this.api.add(url);
-                await this.dbStorage.addArticle(article);
+                var addedArticle = await this.api.add(url);
+                await this.dbStorage.addArticle(addedArticle);
                 return true;
             }
         }
@@ -117,10 +125,12 @@ export class PocketService {
         }
     }
 
+    @log(true)
     public getRandomArticle() {
         return this.dbStorage.getRandomArticle();
     }
 
+    @log(true)
     public async hasArticle(url: string) {
         return url !== undefined && await this.dbStorage.article(url) != null;
     }

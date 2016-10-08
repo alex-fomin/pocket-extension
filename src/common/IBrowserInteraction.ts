@@ -1,11 +1,15 @@
+declare type BrowserInteractionConfig = {
+    onRandomArticle: Function;
+    onToggle: Function;
+    onChangeActivePage: (url: string)=>void;
+    onSaveAccessToken: (accessToken: string)=>void
+};
+
 export interface IBrowserInteraction {
     setBadge(count: number);
     setUnreadStatus(unread: boolean);
     getActiveUrl(): string;
     goto(url: string): void;
-    onToggle(onToggle: Function): void;
-    onRandomArticle(onRandomArticle: Function): void;
     startOAuthRoutine();
-    onChangeActivePage(onChangeActivePage: (url: string)=>void): void;
-    onSaveAccessToken(onSaveAccessToken: (accessToken: string)=>void): void;
+    configure(config: BrowserInteractionConfig): void;
 }

@@ -10,7 +10,6 @@ export function start(settings: ISettings, browserInteraction: IBrowserInteracti
     if (settings.isAuthorized()) {
         pocketService = new PocketService(settings);
 
-
         updateBadge(pocketService);
         updateIcon(pocketService);
         pocketService.refresh().then(()=> {
@@ -43,38 +42,39 @@ export function start(settings: ISettings, browserInteraction: IBrowserInteracti
         browserInteraction.setUnreadStatus(!hasArticle);
     }
 
-    browserInteraction.onRandomArticle(async()=> {
-        if (settings.isAuthorized()) {
+
+    browserInteraction.configure({
+
+        onRandomArticle: async()=> {
+            if (settings.isAuthorized()) {
+                update(pocketService);
+                let article = await pocketService.getRandomArticle();
+                browserInteraction.goto(article.resolved_url);
+            }
+            else {
+                browserInteraction.startOAuthRoutine();
+            }
+        },
+        onToggle: async()=> {
+            if (settings.isAuthorized()) {
+                var wasAdded = await pocketService.toggle(safari.application.activeBrowserWindow.activeTab.url);
+                browserInteraction.setUnreadStatus(!wasAdded);
+                updateBadge(pocketService);
+            }
+            else {
+                browserInteraction.startOAuthRoutine();
+            }
+        },
+        onChangeActivePage: async url=> {
+            if (settings.isAuthorized()) {
+                let hasArticle = await pocketService.hasArticle(url);
+                browserInteraction.setUnreadStatus(!hasArticle);
+            }
+        },
+        onSaveAccessToken: accessToken=> {
+            settings.access_token = accessToken;
+            pocketService = new PocketService(settings);
             update(pocketService);
-            let article = await pocketService.getRandomArticle();
-            browserInteraction.goto(article.resolved_url);
         }
-        else {
-            browserInteraction.startOAuthRoutine();
-        }
-    });
-
-    browserInteraction.onToggle(async()=> {
-        if (settings.isAuthorized()) {
-            var wasAdded = await pocketService.toggle(safari.application.activeBrowserWindow.activeTab.url);
-            browserInteraction.setUnreadStatus(!wasAdded);
-            updateBadge(pocketService);
-        }
-        else {
-            browserInteraction.startOAuthRoutine();
-        }
-    });
-
-    browserInteraction.onChangeActivePage(async url=> {
-        if (settings.isAuthorized()) {
-            let hasArticle = await pocketService.hasArticle(url);
-            browserInteraction.setUnreadStatus(!hasArticle);
-        }
-    });
-
-    browserInteraction.onSaveAccessToken(accessToken=> {
-        settings.access_token = accessToken;
-        pocketService = new PocketService(settings);
-        update(pocketService);
     });
 }
