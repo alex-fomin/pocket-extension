@@ -1,34 +1,44 @@
-
 import {DbStorage} from "./DbStorage";
 import {ISettings} from "./ISettings";
 import {IArticle} from "./model/Article";
 import * as values from "lodash/values"
-import 'whatwg-fetch'
+import * as extend from "lodash/extend"
+import * as Ajax from "simple-ajax"
 
 export class PocketApiBase {
     private static readonly uri = "https://getpocket.com/v3/";
     private static readonly consumer_key = '15287-db68741601b94e375145742f';
 
-    public async post(path: string, data: any, accessToken?: string): Promise<any> {
+    public post(path: string, data: any, accessToken?: string): Promise<any> {
 
-        let extendedData = {
-            consumer_key: PocketApiBase.consumer_key,
-            //...data,
-            access_token: accessToken
-        };
+        let extendedData = extend(
+            {
+                consumer_key: PocketApiBase.consumer_key,
+                access_token: accessToken
+            },
+            data);
 
 
-        let
-            response = await window.fetch(PocketApiBase.uri + path, {
+        let ajax = new Ajax({
+                url: PocketApiBase.uri + path,
                 method: 'POST',
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                data: extendedData,
                 headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
                     'X-Accept': 'application/json'
-                },
-                body: JSON.stringify(extendedData)
-            });
-        return response.json();
+                }
+            }
+        );
+
+        let deferred = new Promise((resolve, reject)=> {
+            ajax.on("success", ({target})=>resolve(JSON.parse(target.responseText)));
+            ajax.on("error", (e)=>reject(e));
+        });
+
+        ajax.send();
+
+        return deferred;
     }
 }
 
@@ -76,6 +86,12 @@ export class PocketService {
     public async update() {
         let result = await this.api.get(this.settings.last_timestamp || 0);
         await this.dbStorage.update(result.items, result.since);
+    }
+
+    public async refresh() {
+        this.settings.last_timestamp = 0;
+        await this.dbStorage.clear();
+        await this.update();
     }
 
     public articlesCount() {

@@ -48,4 +48,8 @@ export class DbStorage extends Dexie {
     addArticle(article: IArticle) {
         return this.articles.add(article);
     }
+
+    clear() {
+        return this.articles.clear();
+    }
 }

@@ -4,9 +4,7 @@
     "target": "es2015",
     "noEmit": true
   },
-  "files": [
-    "./src/safari/lib/safari.d.ts"
-  ],
+  "files": [],
   "exclude": [
     "node_modules"
   ],
