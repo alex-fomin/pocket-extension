@@ -8,7 +8,8 @@
     "build-safari": "webpack --config webpack.config.safari.js --display-error-details --optimize-minimize",
     "watch-safari": "webpack --config webpack.config.safari.js --progress --colors --watch",
     "build": "webpack --config webpack.config.js --display-error-details --optimize-minimize",
-    "watch": "webpack -config webpack.config.js --progress --colors --watch"
+    "watch": "webpack -config webpack.config.js --progress --colors --watch",
+    "svgexport": "svgexport images/svgexport.js"
   },
   "repository": {
     "type": "git",

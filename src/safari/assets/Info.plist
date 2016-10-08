@@ -41,7 +41,7 @@
 					<key>Identifier</key>
 					<string>add_to_pocket</string>
 					<key>Image</key>
-					<string>notAdded-38.png</string>
+					<string>notAdded-40.png</string>
 					<key>Include By Default</key>
 					<true/>
 					<key>Label</key>
@@ -53,7 +53,7 @@
 					<key>Identifier</key>
 					<string>random</string>
 					<key>Image</key>
-					<string>random-38.png</string>
+					<string>random-40.png</string>
 					<key>Include By Default</key>
 					<true/>
 					<key>Label</key>

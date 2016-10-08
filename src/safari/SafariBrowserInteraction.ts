@@ -50,10 +50,10 @@ export class SafariBrowserInteraction implements IBrowserInteraction {
     setUnreadStatus(isUnread: boolean) {
         let addToPocketItem = safari.extension.toolbarItems.find(item=>item.command == Commands.ADD_TO_POCKET);
         if (isUnread) {
-            addToPocketItem.image = safari.extension.baseURI + "notAdded-38.png";
+            addToPocketItem.image = safari.extension.baseURI + "notAdded-40.png";
             addToPocketItem.label = "Add to Pocket";
         } else {
-            addToPocketItem.image = safari.extension.baseURI + "added-38.png";
+            addToPocketItem.image = safari.extension.baseURI + "added-40.png";
             addToPocketItem.label = "Remove from Pocket";
         }
     }

@@ -30,11 +30,9 @@ module.exports = {
             chunks: ['bundle']
         }),
         new CopyWebpackPlugin([
+            {from: 'src/common/assets/'},
             {from: 'src/safari/assets/'},
-            {from: 'images/random-38.png'},
-            {from: 'images/notAdded-38.png'},
-            {from: 'images/added-38.png'},
-            {from: 'src/common/assets/'}
+            {from: 'images/safari/'}
         ])
     ]
 };

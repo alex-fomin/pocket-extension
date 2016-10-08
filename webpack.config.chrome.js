@@ -35,6 +35,8 @@ module.exports = {
             {from: 'images/added-38.png'},
             {from: 'images/notAdded-19.png'},
             {from: 'images/added-19.png'},
+            {from: 'images/logo-128.png'},
+            {from: 'images/logo-48.png'},
             {from: 'src/common/assets/'}
         ])
     ]
