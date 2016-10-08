@@ -21,8 +21,6 @@ var images = {
     }
 };
 
-var input = ['icons.svg'];
-
 function generate(prefix, name, width, padding) {
     var image = images[name];
     var realX = image.x - padding;
